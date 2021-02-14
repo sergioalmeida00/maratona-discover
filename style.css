@@ -266,6 +266,14 @@
         padding: 4rem 0 2rem;
         color: var(--dark-blue);
         font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    footer img {
+        width: 2rem;
+        height: 2rem;
     }
     
     @media (min-width: 800px) {

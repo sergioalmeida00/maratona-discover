@@ -78,7 +78,14 @@
                         <label for="description"></label>
                         <input type="text" id="description" name="description" placeholder="Descrição da Transação">
                     </div>
-
+                    <div class="input-group">
+                        <label for="category"></label>
+                        <select name="category" id="category">
+                            
+                            <option value="C">Credito</option>
+                            <option value="D">Debito</option>
+                        </select>
+                    </div>
                     <div class="input-group">
                         <label for="amount"></label>
                         <input type="number" id="amount" name="amount" placeholder="Valor" step="0.01">
@@ -99,7 +106,9 @@
     </div>
 
     <footer>
-        <p>DEV.FINANCEIRO</p>
+
+        <img src="assets/github.png" alt="github">
+        <p>sergioalmeida00</p>
     </footer>
 
     <script src="scripts.js">

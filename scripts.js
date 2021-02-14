@@ -35,11 +35,16 @@ const Transaction = {
     icomes() {
         //SOMAR AS ENTRADAS
         let income = 0;
+
+
         Transaction.all.forEach(value => {
-            if (value.amount > 0) {
+
+            if (value.category == "C") {
                 income += value.amount
             }
+
         })
+
         return income;
     },
     expenses() {
@@ -47,19 +52,25 @@ const Transaction = {
         let expense = 0;
 
         Transaction.all.forEach(value => {
-            if (value.amount < 0) {
-                expense += value.amount;
+            if (value.category == "D") {
+                expense += value.amount * (-1)
             }
+
         })
         return expense;
     },
     total() {
         //TOTAL
         return Transaction.icomes() + Transaction.expenses()
+    },
+    category() {
+        let select = document.querySelector('#category');
+        let valueCategory = select.options[select.selectedIndex].value;
+        return valueCategory;
     }
 }
 
-//Pega as transações || SUBSTITUIR OS DADOS DO HTML COM O DO JS
+
 
 const DOM = {
     //tag pai
@@ -76,13 +87,14 @@ const DOM = {
     },
 
     innerHTMLTransaction(transaction, index) {
-        const valueCSS = transaction.amount > 0 ? "income" : "expense"
+        const valueCSS = transaction.category == "C" ? "income" : "expense"
+        const signal = transaction.category == "D" ? "-" : "";
         const amount = Utils.formatCurrency(transaction.amount)
 
         const html =
             `            
                 <td class="${valueCSS}">${transaction.description}</td>
-                <td class=${valueCSS}>${amount}</td>
+                <td class=${valueCSS}> ${signal} ${amount}</td>
                 <td class="${valueCSS}">${transaction.date}</td>
                 <td>
                     <img onclick="Transaction.remove(${index})" src="assets/minus.svg" alt="Remover Transação">
@@ -91,7 +103,7 @@ const DOM = {
         return html
     },
     updateBalance() {
-        //PEga os valres das transações e colocar em TEla e formata para real
+
         document.querySelector('#incomeDisplay').innerHTML = Utils.formatCurrency(Transaction.icomes())
         document.querySelector('#expenseDisplay').innerHTML = Utils.formatCurrency(Transaction.expenses())
         document.querySelector('#totalDisplay').innerHTML = Utils.formatCurrency(Transaction.total())
@@ -104,17 +116,19 @@ const DOM = {
 
 const Utils = {
 
-    //FORMATA O NUMERO PARA INTEIRO, TIRANDO O PONTO CASO O USUARIO PASSE 
+
     formatAmount(value) {
         value = Number(value) * 100;
+
         return value;
     },
     formatDate(value) {
         valueDate = value.split("-");
-        return `${valueDate[2]} / ${valueDate[1]} / ${valueDate[0]}`;
+        return `${valueDate[2]}/${valueDate[1]}/${valueDate[0]}`;
     },
     //Verifica se o numero é menor que 0 e se não tem letra, apos isso adiciona um - na frente e formarta para moeda
     formatCurrency(value) {
+
         const signal = Number(value) < 0 ? "-" : "";
         value = String(value).replace(/\D/g, "");
         value = Number(value) / 100;
@@ -122,6 +136,7 @@ const Utils = {
             style: "currency",
             currency: "BRL"
         })
+
         return signal + value;
     }
 
@@ -132,32 +147,39 @@ const Form = {
     description: document.querySelector('input#description'),
     amount: document.querySelector('input#amount'),
     date: document.querySelector('input#date'),
+    category: Transaction.category(),
+
 
     getValues() {
         return {
             description: Form.description.value,
-            amount: Form.amount.value,
+            amount: Form.amount.value.replace("-", ""),
             date: Form.date.value,
+            category: Transaction.category(),
+
         }
     },
 
     validateFildes() {
-        const { description, amount, date } = Form.getValues()
+        const { description, amount, date, category } = Form.getValues()
 
-        if (description.trim() === "" || amount.trim() === "" || date.trim() === "") {
+        if (description.trim() === "" || amount.trim() === "" || date.trim() === "" || category.trim() === "") {
+
             throw new Error("Por favor, Preencha todos os campos do formulario")
         }
 
-        // console.log(amount)
     },
     formatValues() {
-        let { description, amount, date } = Form.getValues()
+        let { description, amount, date, category } = Form.getValues()
+
         amount = Utils.formatAmount(amount)
         date = Utils.formatDate(date)
+
         return {
             description,
             amount,
-            date
+            date,
+            category,
         }
 
     },
@@ -169,7 +191,6 @@ const Form = {
         Form.amount.value = "";
         Form.date.value = "";
     },
-
 
     submit(event) {
         event.preventDefault()
