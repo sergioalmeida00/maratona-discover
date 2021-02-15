@@ -1,5 +1,7 @@
 const Modal = {
         open() {
+            //Inicia o modal
+            //Add uma class active ao modal
             document.querySelector('.modal-overlay').classList.add('active')
 
         },
@@ -20,23 +22,23 @@ const Storage = {
 
 const Transaction = {
     all: Storage.get(),
-
+    //Add nova transação
     add(valueTransaction) {
         Transaction.all.push(valueTransaction)
         App.reload()
     },
-
+    //Remove transação
     remove(index) {
         alert("Tem certeza que deseja excluir o registro ?")
         Transaction.all.splice(index, 1)
-
+            // Utils.refreshPage()
         App.reload()
     },
-    icomes() {
+    incomes() {
         //SOMAR AS ENTRADAS
         let income = 0;
 
-
+        //Verifica se a categoria é Crédito e adiciona em incomes 
         Transaction.all.forEach(value => {
 
             if (value.category == "C") {
@@ -53,6 +55,7 @@ const Transaction = {
 
         Transaction.all.forEach(value => {
             if (value.category == "D") {
+                //Caso seja Debito, pega o valor e coloca para negativo
                 expense += value.amount * (-1)
             }
 
@@ -61,7 +64,25 @@ const Transaction = {
     },
     total() {
         //TOTAL
-        return Transaction.icomes() + Transaction.expenses()
+        total = Transaction.incomes() + Transaction.expenses();
+        if (total < 0) {
+            //Verifica se o valor é menor que 0 e adiciona uma class no html, onde esta configurada no css para receber background red
+            document.querySelector('.card.total').classList.remove('income');
+            document.querySelector('.card.total').classList.add('expense');
+        } else if (total > 0) {
+            //Verifica se o valor é maior que 0 e adiciona uma class no html, onde esta configurada no css para receber background gren
+            document.querySelector('.card.total').classList.remove('expense');
+            document.querySelector('.card.total').classList.add('income');
+        } else {
+            // caso seja zerado pega o padrão
+
+            document.querySelector('.card.total').classList.remove('expense');
+            document.querySelector('.card.total').classList.remove('income');
+
+        }
+
+
+        return total;
     },
     category() {
         let select = document.querySelector('#category');
@@ -69,8 +90,6 @@ const Transaction = {
         return valueCategory;
     }
 }
-
-
 
 const DOM = {
     //tag pai
@@ -86,13 +105,17 @@ const DOM = {
 
     },
 
+
     innerHTMLTransaction(transaction, index) {
         const valueCSS = transaction.category == "C" ? "income" : "expense"
         const signal = transaction.category == "D" ? "-" : "";
+
+
         const amount = Utils.formatCurrency(transaction.amount)
 
         const html =
-            `            
+            `   
+                  
                 <td class="${valueCSS}">${transaction.description}</td>
                 <td class=${valueCSS}> ${signal} ${amount}</td>
                 <td class="${valueCSS}">${transaction.date}</td>
@@ -104,7 +127,7 @@ const DOM = {
     },
     updateBalance() {
 
-        document.querySelector('#incomeDisplay').innerHTML = Utils.formatCurrency(Transaction.icomes())
+        document.querySelector('#incomeDisplay').innerHTML = Utils.formatCurrency(Transaction.incomes())
         document.querySelector('#expenseDisplay').innerHTML = Utils.formatCurrency(Transaction.expenses())
         document.querySelector('#totalDisplay').innerHTML = Utils.formatCurrency(Transaction.total())
 
@@ -116,16 +139,6 @@ const DOM = {
 
 const Utils = {
 
-
-    formatAmount(value) {
-        value = Number(value) * 100;
-
-        return Math.round(value);
-    },
-    formatDate(value) {
-        valueDate = value.split("-");
-        return `${valueDate[2]}/${valueDate[1]}/${valueDate[0]}`;
-    },
     //Verifica se o numero é menor que 0 e se não tem letra, apos isso adiciona um - na frente e formarta para moeda
     formatCurrency(value) {
 
@@ -138,7 +151,23 @@ const Utils = {
         })
 
         return signal + value;
-    }
+    },
+    formatAmount(value) {
+        value = Number(value) * 100;
+
+        return Math.round(value);
+    },
+    //Ajusta a date para formato BR
+    formatDate(value) {
+        valueDate = value.split("-");
+        return `${valueDate[2]}/${valueDate[1]}/${valueDate[0]}`;
+    },
+    refreshPage() {
+        window.location.reload()
+    },
+
+
+
 
 
 }
@@ -153,9 +182,10 @@ const Form = {
     getValues() {
         return {
             description: Form.description.value,
-            amount: Form.amount.value.replace("-", ""),
+
+            amount: Form.amount.value.replace("-", ""), //remove o (-) caso seja passado pelo o usuario
             date: Form.date.value,
-            category: Transaction.category(),
+            category: Transaction.category(), //Pegar a categoria selecionada
 
         }
     },
@@ -169,6 +199,7 @@ const Form = {
         }
 
     },
+    //Formata os dados
     formatValues() {
         let { description, amount, date, category } = Form.getValues()
 
@@ -185,11 +216,13 @@ const Form = {
     },
     saveTransaction(valueTransaction) {
         Transaction.add(valueTransaction);
+
     },
     clearFields() {
         Form.description.value = "";
         Form.amount.value = "";
         Form.date.value = "";
+        Form.category.value = "";
     },
 
     submit(event) {
@@ -211,7 +244,6 @@ const Form = {
 
     }
 }
-
 
 const App = {
     init() {

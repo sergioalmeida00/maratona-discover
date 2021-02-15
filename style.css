@@ -1,7 +1,7 @@
     /* ====================== GLOBAL ======================*/
     
      :root {
-        --dark-blue: #363f5f;
+        --dark-blue: #612F74;
         --read: #e92929;
         --orange: #F96803;
         --gren: #3dd705;
@@ -37,7 +37,7 @@
     /* ====================== LOGO ======================*/
     
     header {
-        background: #F96803;
+        background: var(--dark-blue);
         padding: 2rem 0 10rem;
         text-align: center;
     }
@@ -63,11 +63,11 @@
     /* ====================== BOTÃO ======================*/
     
     .new {
+        display: none;
         text-decoration: none;
         font-weight: bold;
         color: var(--gren);
         display: inline-block;
-        margin-bottom: 1rem;
         transition: 1s;
     }
     
@@ -119,6 +119,10 @@
         color: var(--dark-blue);
     }
     
+    .card.expense {
+        color: var(--read);
+    }
+    
     .card h3 {
         font-size: 1rem;
         display: flex;
@@ -132,9 +136,19 @@
     }
     
     .card.total {
-        background-color: var(--orange);
-        color: white;
+        background-color: white;
+        color: black;
         font-weight: bold;
+    }
+    
+    .card.total.expense {
+        background-color: var(--read);
+        color: white;
+    }
+    
+    .card.total.income {
+        background-color: var(--gren);
+        color: white;
     }
     /* ====================== TABLE ======================*/
     
@@ -155,13 +169,21 @@
         border-radius: 0.25rem 0 0 0.25rem;
     }
     
+    table tbody tr td.income:first-child {
+        border-left: 1rem solid var(--gren);
+    }
+    
+    table tbody tr td.expense:first-child {
+        border-left: 1rem solid var(--read);
+    }
+    
     table thead tr th:last-child,
     table tbody tr td:last-child {
         border-radius: 0 0.25rem 0.25rem 0;
     }
     
     table thead th {
-        background-color: var(--orange);
+        background-color: var(--dark-blue);
         color: white;
         padding: 1rem 2rem;
         text-align: left;
@@ -286,6 +308,6 @@
             gap: 1rem;
         }
         .card.total {
-            background-color: var(--gren);
+            background-color: white;
         }
     }
