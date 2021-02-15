@@ -11,6 +11,8 @@ const Modal = {
     }
     // Guada os elementos das Transações
 
+
+
 const Storage = {
     get() {
         return JSON.parse(localStorage.getItem("finances")) || [];
@@ -34,6 +36,11 @@ const Transaction = {
             // Utils.refreshPage()
         App.reload()
     },
+    removeAll() {
+        Transaction.all.splice(0, Transaction.all.length);
+        App.reload()
+    },
+
     incomes() {
         //SOMAR AS ENTRADAS
         let income = 0;
@@ -261,5 +268,6 @@ const App = {
         App.init()
     }
 }
+
 
 App.init()

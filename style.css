@@ -63,6 +63,21 @@
     /* ====================== BOTÃO ======================*/
     
     .new {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .new .danger {
+        color: var(--read);
+        opacity: 0.8;
+    }
+    
+    .new .danger:hover {
+        opacity: 1;
+    }
+    
+    .new a {
         display: none;
         text-decoration: none;
         font-weight: bold;
