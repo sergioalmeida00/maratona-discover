@@ -42,9 +42,10 @@
         text-align: center;
     }
     
-    header img {
-        width: 20rem;
+    header .logo img {
+        width: 50%;
         margin-bottom: -5rem;
+        height: auto;
     }
     
     #logo {
@@ -134,8 +135,13 @@
         color: var(--dark-blue);
     }
     
+    .card.income {
+        border-left: 0.85rem solid var(--gren);
+    }
+    
     .card.expense {
         color: var(--read);
+        border-left: 0.85rem solid var(--read)
     }
     
     .card h3 {
@@ -251,6 +257,7 @@
     .modal {
         background: #F0F2f5;
         padding: 2rem;
+        width: 90%;
     }
     /* ====================== FORM ======================*/
     
@@ -280,11 +287,10 @@
     .input-group {
         margin-top: 1rem;
     }
-    
-    .input-group small {
+    /* .input-group small {
         font-weight: bold;
         opacity: 0.4;
-    }
+    } */
     
     .input-group.actions {
         display: flex;
@@ -303,9 +309,6 @@
         padding: 4rem 0 2rem;
         color: var(--dark-blue);
         font-weight: bold;
-        display: flex;
-        align-items: center;
-        justify-content: center;
     }
     
     footer img {
@@ -313,9 +316,29 @@
         height: 2rem;
     }
     
+    footer .link a {
+        text-decoration: none;
+        color: black;
+        font-weight: bold;
+        margin-left: 5px;
+    }
+    
+    .link .git:hover {
+        transform: scale(1.1);
+    }
+    
+    .link .email:hover {
+        transform: scale(1.1);
+    }
+    
     @media (min-width: 800px) {
         html {
             font-size: 87.5%;
+        }
+        header .logo img {
+            width: 20rem;
+            margin-bottom: -5rem;
+            height: auto;
         }
         #balance {
             display: grid;
@@ -324,5 +347,36 @@
         }
         .card.total {
             background-color: white;
+        }
+        .modal {
+            background: #F0F2f5;
+            padding: 2rem;
+            width: 50%;
+        }
+        footer {
+            text-align: center;
+            padding: 4rem 0 2rem;
+            color: var(--dark-blue);
+            font-weight: bold;
+        }
+        footer img {
+            width: 2rem;
+            height: 2rem;
+        }
+        footer .link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        footer .link .git {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        footer .link .email {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 15px;
         }
     }

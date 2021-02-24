@@ -13,17 +13,19 @@
 
 </head>
 
-
 <body>
 
     <header>
-        <img src="assets/fin.svg" alt="">
+        <div class="logo">
+            <img src="assets/fin.svg" alt="">
+        </div>
+
     </header>
     <main class="container">
 
         <section id="balance">
             <!-- <h2>Balanço</h2> -->
-            <div class="card">
+            <div class="card income">
                 <h3>
                     ENTRADAS
                     <img src="assets/income.svg" alt="Entradas">
@@ -51,11 +53,8 @@
         <section id="transaction">
             <div class="new">
                 <a href="#" onclick="Modal.open()">+Nova Transação</a>
-                <a href="#" class="danger" onclick="Transaction.removeAll()"> - Remover todas as Transações </a>
+                <a href="#" class="danger" onclick="Transaction.removeAll()"> -Remover Tudo</a>
             </div>
-
-
-
 
             <table id="data-table">
                 <thead>
@@ -95,7 +94,7 @@
                     <div class="input-group">
                         <label for="amount"></label>
                         <input type="number" id="amount" name="amount" placeholder="Valor" step="0.01">
-                        <small class="help">Use o sinal -(negativo) para despesas e, virgula para casas decimais! </small>
+
                     </div>
                     <div class="input-group">
                         <label for="date"></label>
@@ -112,9 +111,23 @@
     </div>
 
     <footer>
+        <div class="link">
+            <div class="git">
+                <img src="assets/github.png" alt="github">
+                <a href="github.com/sergioalmeida00">
+                    sergioalmeida00
+                </a>
+            </div>
+            <div class="email">
+                <img src="assets/icon-email.png" alt="email">
+                <a href="">sergioalmeidaa00@gmail.com</a>
+            </div>
 
-        <img src="assets/github.png" alt="github">
-        <p>sergioalmeida00</p>
+
+
+
+        </div>
+
     </footer>
 
     <script src="scripts.js">
