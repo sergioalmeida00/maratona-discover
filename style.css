@@ -185,6 +185,10 @@
         color: black;
     }
     
+    table tbody td {
+        padding: 10px;
+    }
+    
     table thead tr th:first-child,
     table tbody tr td:first-child {
         border-radius: 0.25rem 0 0 0.25rem;
@@ -217,14 +221,6 @@
     
     table tbody tr:hover {
         opacity: 1;
-    }
-    
-    table tbody td {
-        background-color: white;
-        padding: 1rem 2rem;
-        box-shadow: 1px 1px 1.5px rgba(24, 22, 22, 0.5);
-        font-size: 400;
-        font-weight: bold;
     }
     
     td.income {
@@ -287,10 +283,11 @@
     .input-group {
         margin-top: 1rem;
     }
-    /* .input-group small {
+    
+    .input-group small {
         font-weight: bold;
         opacity: 0.4;
-    } */
+    }
     
     .input-group.actions {
         display: flex;
@@ -347,6 +344,13 @@
         }
         .card.total {
             background-color: white;
+        }
+        table tbody td {
+            background-color: white;
+            padding: 1rem 2rem;
+            box-shadow: 1px 1px 1.5px rgba(24, 22, 22, 0.5);
+            font-size: 400;
+            font-weight: bold;
         }
         .modal {
             background: #F0F2f5;
